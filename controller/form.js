@@ -76,8 +76,9 @@ const fetchform = async (req, res) => {
 
 const deleteform = async(req,res)=>{
     try{
-        const form = await formModel.deleteMany({})
-        if(!form){
+        const {id}= req.params;
+        const deletelist = await formModel.findByIdAndDelete(id)
+        if(!deletelist){
             return res.json({success : false, message : "not deleted" })
         }
         return res.json({success : true, message : " deleted successfully"})
