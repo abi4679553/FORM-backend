@@ -31,7 +31,7 @@ const createform = async (req, res) => {
         return res.json({
             success: true,
             message: "account created successfully",
-            data: newUser      
+            data: newUser
         });
 
     } catch (err) {
@@ -50,7 +50,7 @@ const fetchform = async (req, res) => {
     try {
         const form = await formModel.find({});
 
-        
+
 
         if (!form) {
             return res.json({
@@ -74,20 +74,42 @@ const fetchform = async (req, res) => {
     }
 }
 
-const deleteform = async(req,res)=>{
-    try{
-        const {id}= req.params;
+const deleteform = async (req, res) => {
+    try {
+        const { id } = req.params;
         const deletelist = await formModel.findByIdAndDelete(id)
-        if(!deletelist){
-            return res.json({success : false, message : "not deleted" })
+        if (!deletelist) {
+            return res.json({ success: false, message: "not deleted" })
         }
-        return res.json({success : true, message : " deleted successfully"})
+        return res.json({ success: true, message: " deleted successfully" })
     }
-    catch(err){
+    catch (err) {
         console.log(err.message)
-        return res.json({success : false, message : "networ error for delete method"})
-        
+        return res.json({ success: false, message: "networ error for delete method" })
+
     }
 }
 
-module.exports = { createform , fetchform, deleteform};
+const updateform = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        console.log("URL ID:", id);
+
+        const form = await formModel.findByIdAndUpdate(id, req.body, { new: true });
+        console.log("FORM:", form);
+
+        if (!form) {
+            return res.json({ success: false, message: "Form not found" });
+        }
+
+        return res.json({ success: true, message: "Form updated successfully", data: form });
+
+    } catch (err) {
+        console.log(err.message);
+
+        return res.json({ success: false, message: err.message });
+    }
+};
+
+module.exports = { createform, fetchform, deleteform, updateform };
