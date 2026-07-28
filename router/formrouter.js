@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/create-form", createform);
 router.get("/fetch-form",fetchform);
-router.delete("/delete-form/:id",deleteform);
+router.delete("/delete-user/:id",deleteform);
 
 module.exports = router;
